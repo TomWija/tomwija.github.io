@@ -30,7 +30,7 @@ export const PhotoDisplay: React.FC<PhotoDisplayProps> = ({ event }) => {
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[80vh] md:max-h-[600px]">
           
           {/* Image Section */}
-          <div className="w-full md:w-3/5 h-64 md:h-auto relative overflow-hidden group">
+          <div className="w-full md:w-3/5 h-80 md:h-auto relative overflow-hidden group">
             <img 
               src={event.imageUrl} 
               alt={event.title} 
