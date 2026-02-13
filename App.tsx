@@ -27,6 +27,7 @@ export default function App() {
   const [animationState, setAnimationState] = useState<AnimationState>(
     AnimationState.PLAYING
   );
+  const [isMobile, setIsMobile] = useState(false);
 
   // Ref to hold the interval ID so we can clear it
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -72,6 +73,20 @@ export default function App() {
     }
   };
 
+  // Check for mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      // Tailwind 'md' breakpoint is 768px
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Initial check
+    checkMobile();
+
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   // Start on mount
   useEffect(() => {
     startSlideshow();
@@ -103,7 +118,8 @@ export default function App() {
             const isFuture = index > currentIndex;
             const isCurrent = index === currentIndex;
             const distance = currentIndex - index;
-            const rotation = ROTATIONS[index];
+            // No rotation on mobile
+            const rotation = isMobile ? 0 : ROTATIONS[index];
 
             // Opacity Logic:
             // Future: 1 (but hidden by transform)
